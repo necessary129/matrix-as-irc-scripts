@@ -44,6 +44,13 @@ def main(registration, homeserver, user_id, alias):
     power_level_event = get_power_level(homeserver, room_id, token)
     print("Modifying existing power level event:")
     print(json.dumps(power_level_event))
+    current_power_level = power_level_event['users'].get(user_id, 0)
+    if current_power_level != 50:
+        cont = input("Current user is not an op. Countinue? [y/n]: ")
+        if cont.lower() == 'y':
+            pass
+        else:
+            return
     power_level_event["users"][user_id] = 100
     put_power_level(homeserver, room_id, token, power_level_event)
     print("Granted.")
